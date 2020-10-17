@@ -1,0 +1,1 @@
+{"parent":null,"pid":2442,"argv":["/usr/bin/node","/usr/bin/npm","run","test"],"execArgv":[],"cwd":"/home/jagarcia/Platzi/backend-node/movis-api","time":1601950567867,"ppid":2431,"coverageFilename":"/home/jagarcia/Platzi/backend-node/movis-api/.nyc_output/7827c2e0-c258-4440-aa11-0c64632f7807.json","externalId":"","uuid":"7827c2e0-c258-4440-aa11-0c64632f7807","files":[]}
