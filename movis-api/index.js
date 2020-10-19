@@ -21,5 +21,6 @@ app.use(validateBoomError);
 app.use(errorHandler);
 
 app.listen(config.port, () => {
+  // eslint-disable-next-line no-console
   console.log(`Escuchando en http://localhost:${config.port}`);
 });
