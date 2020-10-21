@@ -1,7 +1,14 @@
 const express = require('express');
+
+const authApi = require('./routes/auth');
 const moviesApi = require('./routes/movies');
 const userMoviesApi = require('./routes/userMovies');
-const { logErrors, validateBoomError, errorHandler } = require('./utils/middleware/errorHandlers.js');
+
+const {
+  logErrors,
+  validateBoomError,
+  errorHandler,
+} = require('./utils/middleware/errorHandlers.js');
 const { config } = require('./config/index');
 const notFoundHandler = require('./utils/middleware/notFoundHandler');
 
@@ -11,6 +18,7 @@ const app = express();
 app.use(express.json());
 
 // Routes
+authApi(app);
 moviesApi(app);
 userMoviesApi(app);
 

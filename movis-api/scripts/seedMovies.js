@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { moviesMock } = require('../utils/mocks/moviesMock')
 const MongoLib = require('../lib/mongo')
 

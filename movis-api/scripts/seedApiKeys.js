@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const crypto = require('crypto')
 const MongoLib = require('../lib/mongo')
 
@@ -51,6 +52,7 @@ async function seedApiKeys() {
     process.exit(0)
 
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
     process.exit(1)
   }
