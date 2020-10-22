@@ -6,7 +6,7 @@ function validate(data, schema) {
   return error;
 }
 
-function validationHandler(check = 'body', schema) {
+function validationHandler(schema, check = 'body') {
   return function (req, res, next) {
     const error = validate(req[check], schema);
 

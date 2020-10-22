@@ -3,9 +3,10 @@ const passport = require('passport');
 const boom = require('@hapi/boom');
 const jwt = require('jsonwebtoken');
 const ApiKeysService = require('../services/apiKeys');
-
-const { config } = require('../config');
 const UsersService = require('../services/users');
+const validationHandler = require('../utils/middleware/validationHandler');
+const { createUserSchema } = require('../utils/schemas/users');
+const { config } = require('../config');
 
 //Basic Strategy
 require('../utils/auth/strategies/basic');
@@ -15,24 +16,7 @@ function authApi(app) {
   app.use('/api/auth', router);
 
   const apiKeyService = new ApiKeysService();
-  const usersService = new UsersService();
-
-  router.post('/sign-in/test', async (req, res, next) => {
-    const { apiKeyToken } = req.body;
-
-    try {
-      const apiKey = await apiKeyService.getApiKey({ token: apiKeyToken });
-      const user = await usersService.getUser({ email: 'root@undefined.sh' });
-
-      res.status(200).json({
-        apiKeyToken: apiKeyToken,
-        apiKey: apiKey,
-        user: user,
-      });
-    } catch (error) {
-      next(error);
-    }
-  });
+  const userService = new UsersService();
 
   router.post('/sign-in', async function (req, res, next) {
     const { apiKeyToken } = req.body;
@@ -49,7 +33,7 @@ function authApi(app) {
 
         req.login(user, { session: false }, async function (error) {
           if (error) {
-            next(error);
+            return next(error);
           }
           const apiKey = await apiKeyService.getApiKey({ token: apiKeyToken });
 
@@ -76,6 +60,25 @@ function authApi(app) {
         next(error);
       }
     })(req, res, next);
+  });
+
+  router.post('/sign-up', validationHandler(createUserSchema), async function (
+    req,
+    res,
+    next
+  ) {
+    const { body: user } = req;
+
+    try {
+      const createdUserId = await userService.createUser({ user });
+
+      res.status(201).json({
+        data: createdUserId,
+        message: 'user created',
+      });
+    } catch (error) {
+      next(error);
+    }
   });
 }
 

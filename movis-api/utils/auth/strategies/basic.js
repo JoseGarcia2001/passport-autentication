@@ -7,15 +7,18 @@ const UsersService = require('../../../services/users');
 
 passport.use(
   new BasicStrategy(async function (email, password, cb) {
-    const usersServices = new UsersService();
+    const userService = new UsersService();
 
     try {
-      const user = usersServices.getUser({ email: email });
+      const user = await userService.getUser({ email });
+
       if (!user) {
         return cb(boom.unauthorized(), false);
       }
 
-      if (!(await bcrypt.compare(password, user.password))) {
+      const match = await bcrypt.compare(password, user.password);
+
+      if (!match) {
         return cb(boom.unauthorized(), false);
       }
 
