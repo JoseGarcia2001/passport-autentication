@@ -57,7 +57,16 @@ app.post("/auth/sign-up", async function (req, res, next) {
   }
 });
 
-app.get("/movies", async function (req, res, next) {});
+app.get("/movies", async function (req, res, next) {
+  try {
+    await axios({
+      method: "get",
+      url: `${config.apiUrl}/api/movies`,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.post("/user-movies", async function (req, res, next) {
   try {
