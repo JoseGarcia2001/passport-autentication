@@ -10,7 +10,7 @@ const app = express();
 
 // body parser y cookie parser
 app.use(express.json());
-app.use(cookieParser);
+app.use(cookieParser());
 
 // Basic strategy
 require("./utils/auth/strategies/basic");
@@ -46,8 +46,8 @@ app.post("/auth/sign-up", async function (req, res, next) {
 
   try {
     await axios({
-      method: "post",
       url: `${config.apiUrl}/api/auth/sign-up`,
+      method: "post",
       data: user,
     });
 
@@ -57,16 +57,7 @@ app.post("/auth/sign-up", async function (req, res, next) {
   }
 });
 
-app.get("/movies", async function (req, res, next) {
-  try {
-    await axios({
-      method: "get",
-      url: `${config.apiUrl}/api/movies`,
-    });
-  } catch (error) {
-    next(error);
-  }
-});
+app.get("/movies", async function (req, res, next) {});
 
 app.post("/user-movies", async function (req, res, next) {
   try {
@@ -74,14 +65,14 @@ app.post("/user-movies", async function (req, res, next) {
     const { token } = req.cookies;
 
     const { data, status } = await axios({
-      method: "post",
       url: `${config.apiUrl}/api/user-movies`,
-      headers: { Authorization: `Bearer ${token}` },
       data: userMovie,
+      headers: { Authorization: `Bearer ${token}` },
+      method: "post",
     });
 
     if (status !== 201) {
-      return boom.badImplementation();
+      return next(boom.badImplementation());
     }
 
     res.status(201).json(data);
@@ -96,13 +87,13 @@ app.delete("/user-movies/:userMovieId", async function (req, res, next) {
     const { token } = req.cookies;
 
     const { data, status } = await axios({
-      method: "delete",
       url: `${config.apiUrl}/api/user-movies/${userMovieId}`,
       headers: { Authorization: `Bearer ${token}` },
+      method: "delete",
     });
 
     if (status !== 200) {
-      return boom.badImplementation();
+      return next(boom.badImplementation());
     }
 
     res.status(200).json(data);

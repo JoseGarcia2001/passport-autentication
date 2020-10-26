@@ -9,14 +9,14 @@ passport.use(
   new BasicStrategy(async function (email, password, cb) {
     try {
       const { data, status } = await axios({
-        method: "post",
         url: `${config.apiUrl}/api/auth/sign-in`,
+        method: "post",
         auth: {
           password,
           username: email,
         },
         data: {
-          apiKeyToken: config.apiKeyToken,
+          apiKeyToken: config.adminApiKeyToken,
         },
       });
 

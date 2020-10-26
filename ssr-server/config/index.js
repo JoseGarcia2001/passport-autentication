@@ -5,6 +5,7 @@ const config = {
   port: process.env.PORT,
   apiUrl: process.env.API_URL,
   apiKeyToken: process.env.API_KEY_TOKEN,
+  adminApiKeyToken: process.env.ADMIN_API_KEY_TOKEN,
 };
 
 module.exports = { config };
