@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 
 const authApi = require('./routes/auth');
 const moviesApi = require('./routes/movies');
@@ -16,6 +17,7 @@ const app = express();
 
 // Body-parser
 app.use(express.json());
+app.use(helmet());
 
 // Routes
 authApi(app);

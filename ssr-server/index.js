@@ -4,6 +4,7 @@ const session = require("express-session");
 const boom = require("@hapi/boom");
 const cookieParser = require("cookie-parser");
 const axios = require("axios");
+const helmet = require("helmet");
 
 const { config } = require("./config");
 
@@ -15,6 +16,9 @@ app.use(cookieParser());
 app.use(session({ secret: config.sessionSecret }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Security Helmet
+app.use(helmet());
 
 // Basic strategy
 require("./utils/auth/strategies/basic");
@@ -218,9 +222,7 @@ app.get(
 
 app.get(
   "/auth/linkedin",
-  passport.authenticate("linkedin", {
-    scope: ["r_basicprofile", "r_emailaddress"],
-  })
+  passport.authenticate("linkedin", { state: "SOME STATE" })
 );
 
 app.get(
