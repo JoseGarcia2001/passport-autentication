@@ -13,6 +13,8 @@ const config = {
   sessionSecret: process.env.SESSION_SECRET,
   facebookKey: process.env.FACEBOOK_KEY,
   facebookSecret: process.env.FACEBOOK_SECRET,
+  linkedinClientId: process.env.LINKEDIN_CLIENT_ID,
+  linkedinSecret: process.env.LINKEDIN_SECRET,
 };
 
 module.exports = { config };

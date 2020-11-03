@@ -31,6 +31,9 @@ require("./utils/auth/strategies/twitter");
 // Facebook Strategy
 require("./utils/auth/strategies/facebook");
 
+// Linkedin Strategy
+require("./utils/auth/strategies/linkedin");
+
 app.post("/auth/sign-in", async function (req, res, next) {
   passport.authenticate("basic", function (error, data) {
     try {
@@ -213,7 +216,32 @@ app.get(
   }
 );
 
+app.get(
+  "/auth/linkedin",
+  passport.authenticate("linkedin", {
+    scope: ["r_basicprofile", "r_emailaddress"],
+  })
+);
+
+app.get(
+  "/auth/linkedin/callback",
+  passport.authenticate("linkedin", { session: false }),
+  function (req, res, next) {
+    if (!req.user) {
+      next(boom.unauthorized());
+    }
+
+    const { token, ...user } = req.user;
+
+    res.cookie("token", token, {
+      httpOnly: !config.dev,
+      secure: !config.dev,
+    });
+
+    res.status(200).json(user);
+  }
+);
+
 app.listen(config.port, () => {
   console.log(`Escuchando en http://localhost:${config.port}`);
-  console.log(`${config.apiUrl}/api/user-movies`);
 });
