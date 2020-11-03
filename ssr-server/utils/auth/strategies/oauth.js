@@ -22,8 +22,8 @@ const oAuth2Strategy = new OAuth2Strategy(
       url: `${config.apiUrl}/api/auth/sign-provider`,
       method: "post",
       data: {
-        name: profile.name,
-        email: profile.email,
+        name: profile.displayName,
+        email: profile.emails[0].value,
         password: profile.id,
         apiKeyToken: config.apiKeyToken,
       },
