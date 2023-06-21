@@ -21,12 +21,12 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^4.2.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.0",
     "mongodb": "^3.6.2",
     "passport": "^0.4.0",
     "passport-http": "^0.3.0",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.1"
   },
   "devDependencies": {
     "eslint": "^7.9.0",
